@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PRN_Project.Models;
+using PRN_Project.Services;
 using System.Diagnostics;
 
 namespace PRN_Project.Controllers
@@ -15,6 +16,9 @@ namespace PRN_Project.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.mostLikedAudio = new HomeServices().findMostLiked();
+            Console.WriteLine(new HomeServices().findMostLiked());
+
             return View();
         }
 

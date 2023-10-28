@@ -26,6 +26,9 @@ namespace PRN_Project.Models
         [MaxLength(255)]
         public string filename { get; set; }
 
+        [MaxLength(255)]
+        public string title { get; set; }
+
         public virtual User User { get; set; }
         public virtual Genre Genre { get; set; }
         public virtual Mood Mood { get; set; }

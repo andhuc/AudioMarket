@@ -1,0 +1,50 @@
+﻿<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-4 col-md-offset-4">
+
+            <h2>Register</h2>
+
+            <form action="register" method="post">
+
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" class="form-control customBg">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control customBg">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="repassword" name="repassword" class="form-control customBg">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Display name:</label>
+                    <input type="text" name="displayname" class="form-control customBg">
+                </div>
+
+                <div>
+                    <button type="submit" class="btn btn-primary mt-3">Register</button>
+                </div>
+
+                <div>
+                    <a class="link-secondary mt-5 text-white" asp-action="Login">Login</a>
+                </div>
+
+            </form>
+
+            @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+            {
+                <p class="text-danger mt-2">@ViewBag.ErrorMessage</p>
+            }
+
+        </div>
+
+    </div>
+
+</div>

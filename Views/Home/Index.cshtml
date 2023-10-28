@@ -1,8 +1,22 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Audio mostLikedAudio = ViewBag.mostLikedAudio;
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    
+    <div class="container">
+        <h1>Big Input Form @mostLikedAudio.title</h1>
+        <form>
+            <div class="form-group">
+                <label for="inputField">Input Field:</label>
+                <input type="text" class="form-control" id="inputField" placeholder="Enter something...">
+            </div>
+            <div class="form-group">
+                <label for="textareaField">Textarea:</label>
+                <textarea class="form-control" id="textareaField" rows="5" placeholder="Enter a larger text..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
 </div>

@@ -90,6 +90,7 @@ CREATE TABLE [dbo].[Audio](
 	[moodId] [int] NULL,
 	[status] [bit] DEFAULT 1,
 	[filename] [nvarchar](255) NULL,
+	[title] [nvarchar](255) NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -246,6 +247,9 @@ GO
 ALTER DATABASE [AudioMarket] SET  READ_WRITE 
 GO
 
+USE [AudioMarket]
+GO
+
 -- Users
 INSERT INTO [User] (username, password, name, role)
 VALUES
@@ -274,13 +278,13 @@ VALUES
   ('Angry');
   
 -- Audio
-INSERT INTO Audio (artistId, genreId, moodId, filename)
+INSERT INTO Audio (artistId, genreId, moodId, filename, title)
 VALUES
-  (4, 2, 1, 'song1.mp3'),
-  (4, 5, 3, 'song2.mp3'),
-  (4, 1, 2, 'song3.mp3'),
-  (3, 4, 4, 'song4.mp3'),
-  (2, 3, 5, 'song5.mp3');
+  (4, 2, 1, 'song1.mp3', 'vocal'),
+  (4, 5, 3, 'song2.mp3', 'drum loop'),
+  (4, 1, 2, 'song3.mp3', 'piano loop'),
+  (3, 4, 4, 'song4.mp3', 'flute melody'),
+  (2, 3, 5, 'song5.mp3', 'gc beat');
   
 -- Reviews
 INSERT INTO Review (userId, audioId, rating, comment)  
@@ -294,8 +298,8 @@ VALUES
 -- Discounts
 INSERT INTO Discount (discountAmount, quantity)
 VALUES
-  (10, 2),
-  (20, 3);
+  (0.1, 2),
+  (0.2, 3);
   
 -- Orders  
 INSERT INTO [Order] (buyerId, audioId, status, discountId)
@@ -313,4 +317,5 @@ VALUES
   (1, 3),
   (2, 2),
   (2, 5),
-  (3, 4);
+  (3, 4),
+  (1, 5);
