@@ -1,0 +1,31 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+
+            <h2>Login</h2>
+
+            <form action="login" method="post" class="form-horizontal">
+
+                <div class="form-group">
+                    <label for="username" class="control-label">Username:</label>
+                    <input type="text" id="username" name="username" class="form-control customBg">
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="control-label">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control customBg">
+                </div>
+
+                <div class="form-group mt-3">
+                    <input type="submit" value="Login" class="btn btn-primary">
+                </div>
+
+            </form>
+
+            @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+            {
+                <p class="text-danger mt-2">@ViewBag.ErrorMessage</p>
+            }
+        </div>
+    </div>
+</div>
