@@ -90,6 +90,7 @@ CREATE TABLE [dbo].[Audio](
 	[moodId] [int] NULL,
 	[status] [bit] DEFAULT 1,
 	[filename] [nvarchar](255) NULL,
+	[image] [nvarchar](255) NULL,
 	[title] [nvarchar](255) NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -278,13 +279,13 @@ VALUES
   ('Angry');
   
 -- Audio
-INSERT INTO Audio (artistId, genreId, moodId, filename, title)
+INSERT INTO Audio (artistId, genreId, moodId, filename, title, [image])
 VALUES
-  (4, 2, 1, 'song1.mp3', 'vocal'),
-  (4, 5, 3, 'song2.mp3', 'drum loop'),
-  (4, 1, 2, 'song3.mp3', 'piano loop'),
-  (3, 4, 4, 'song4.mp3', 'flute melody'),
-  (2, 3, 5, 'song5.mp3', 'gc beat');
+  (4, 2, 1, 'song1.mp3', 'vocal', '/audio/img/test.png'),
+  (4, 5, 3, 'song2.mp3', 'drum loop', '/audio/img/test.png'),
+  (4, 1, 2, 'song3.mp3', 'piano loop', '/audio/img/test.png'),
+  (3, 4, 4, 'song4.mp3', 'flute melody', '/audio/img/test.png'),
+  (2, 3, 5, 'song5.mp3', 'gc beat', '/audio/img/test.png');
   
 -- Reviews
 INSERT INTO Review (userId, audioId, rating, comment)  

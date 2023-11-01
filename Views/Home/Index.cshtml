@@ -2,21 +2,40 @@
     Audio mostLikedAudio = ViewBag.mostLikedAudio;
 }
 
-<div class="text-center">
+<div class="container">
     
-    <div class="container">
-        <h1>Big Input Form @mostLikedAudio.title</h1>
-        <form>
-            <div class="form-group">
-                <label for="inputField">Input Field:</label>
-                <input type="text" class="form-control" id="inputField" placeholder="Enter something...">
+    <div class="row d-flex justify-content-center">
+
+        <div class="col-8 text-center d-flex flex-column">
+
+            @* seach form *@
+            <form asp-action="Search" method="get" class="position-relative" style="margin-top: 20vh;">
+                <div class="input-group">
+
+                    <input type="text" class="form-control" placeholder="Search Audio" style="height: 8vh;" />
+
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button" 
+                        style="background-color: #6e57f6;height: 8vh;">Search</button>
+                    </div>
+
+                </div>
+            </form>
+
+            @* top track *@
+            <div>
+
             </div>
-            <div class="form-group">
-                <label for="textareaField">Textarea:</label>
-                <textarea class="form-control" id="textareaField" rows="5" placeholder="Enter a larger text..."></textarea>
+
+            @* track list *@
+            <div>
+                <img src="/img/home-decor.png" class="w-100" />
+
+
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+
+        </div>
+
     </div>
 
 </div>
