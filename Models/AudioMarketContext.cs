@@ -27,6 +27,9 @@ namespace PRN_Project.Models
         public string filename { get; set; }
 
         [MaxLength(255)]
+        public string image { get; set; }
+
+        [MaxLength(255)]
         public string title { get; set; }
 
         public virtual User User { get; set; }

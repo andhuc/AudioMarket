@@ -25,6 +25,7 @@ namespace PRN_Project.Controllers
             else
             {
                 HttpContext.Session.SetString("user", username);
+                HttpContext.Session.SetInt32("userId", user.id);
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -74,6 +75,69 @@ namespace PRN_Project.Controllers
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Upload()
+        {
+            if(HttpContext.Session.GetString("user")==null) return RedirectToAction("Login", "User");
+
+            AudioMarketContext audioMarketContext = new AudioMarketContext();
+
+            ViewBag.GenreList = audioMarketContext.Genres.ToList();
+            ViewBag.MoodList = audioMarketContext.Moods.ToList();
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Upload(string audioTitle, IFormFile audioFile, IFormFile audioImage, int genreId, int moodId)
+        {
+            String imagePath = "/audio/img/";
+            AudioMarketContext audioMarketContext = new AudioMarketContext();
+
+            try
+            {
+                // Check if audioFile and audioImage are not null
+                if (audioFile != null && audioImage != null)
+                {
+                    // Save audioFile to a specified location
+                    var audioFileName = Path.Combine("wwwroot/audio", audioFile.FileName);
+                    using (var stream = new FileStream(audioFileName, FileMode.Create))
+                    {
+                        audioFile.CopyTo(stream);
+                    }
+
+                    // Save audioImage to a specified location
+                    var imageFileName = Path.Combine("wwwroot/audio/img", audioImage.FileName);
+                    using (var stream = new FileStream(imageFileName, FileMode.Create))
+                    {
+                        audioImage.CopyTo(stream);
+                    }
+
+                    Audio audio = new Audio();
+
+                    audio.title = audioTitle;
+                    audio.filename = audioFileName;
+                    audio.image = imageFileName;
+                    audio.artistId = HttpContext.Session.GetInt32("userId");
+                    audio.genreId = genreId; audio.moodId = moodId;
+
+                    audioMarketContext.Audios.Add(audio);
+                    audioMarketContext.SaveChanges();
+
+                    return RedirectToAction("AudioList", "Home");
+                }
+                else
+                {
+                    // Handle the case where audioFile or audioImage is not provided
+                    return Redirect("./Upload?error");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions, such as file I/O errors
+                return Redirect("./Upload?error");
+            }
         }
     }
 }

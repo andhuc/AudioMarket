@@ -1,0 +1,100 @@
+﻿@model List<Audio>
+
+<div class="row d-flex justify-content-center text-center">
+
+    <h3 class="fw-bold mt-4">AUDIO LIST</h3>
+
+    <div class="row justify-content-center mt-4">
+
+        <div class="col-3">
+            <input type="text" class="form-control" placeholder="Search" oninput="filterByTitle(this.value)" />
+        </div>
+
+        <div class="col-2">
+            <select name="genreId" class="form-select" onchange="filterByGenre(this.value)">
+                <option value="all" selected>All</option>
+                @foreach (var genre in ViewBag.GenreList)
+                {
+                    <option value="@genre.id">@genre.genre</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-2">
+            <select name="moodId" class="form-select" onchange="filterByMood(this.value)">
+                <option value="all" selected>All</option>
+                @foreach (var mood in ViewBag.MoodList)
+                {
+                    <option value="@mood.id">@mood.moodName</option>
+                }
+            </select>
+        </div>
+
+    </div>
+
+    <div class="col-8 mt-5">
+
+        <table class="table table-borderless text-light">
+            <thead class="text-center mb-5">
+                <tr class="mb-5">
+                    <th class="w-25 border-bottom-0"></th>
+                    <th class="border-bottom">Title</th>
+                    <th class="border-bottom">Genre</th>
+                    <th class="border-bottom">Mood</th>
+                    <th class="border-bottom">Artist</th>
+                </tr>
+            </thead>
+            <tbody class="text-center mt-5">
+                @foreach (var audio in Model)
+                {
+                    <tr class="mt-5 audio" data-genre="@audio.genreId" data-mood="@audio.moodId" data-title="@audio.title.ToLower()">
+                        <td>
+                            <img src="@audio.image" style="aspect-ratio: 1" class="w-50">
+                        </td>
+                        <td class="fw-bold">@audio.title.ToUpper()</td>
+                        <td>@audio.Genre.genre</td>
+                        <td>@audio.Mood.moodName</td>
+                        <td>@audio.User.name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+<script>
+
+    const audios = document.querySelectorAll('.audio');
+
+    let title = '';
+    let genre = 'all';
+    let mood = 'all';
+
+    function filterByTitle(input) {
+        title = input;
+        filter()
+    }
+
+    function filterByGenre(id) {
+        genre = id;
+        filter()
+    }
+
+    function filterByMood(id) {
+        mood = id;
+        filter()
+    }
+
+    function filter() {
+        for (let audio of audios) {
+            if ((genre == 'all' || audio.dataset.genre == genre) && (mood == 'all' || audio.dataset.mood == mood) && (audio.dataset.title.includes(title.toLowerCase())))
+                audio.style.display = 'table-row';
+            else audio.style.display = 'none';
+        }
+
+    }
+
+</script>
+
