@@ -117,15 +117,15 @@ namespace PRN_Project.Controllers
                     Audio audio = new Audio();
 
                     audio.title = audioTitle;
-                    audio.filename = audioFileName;
-                    audio.image = imageFileName;
+                    audio.filename = "/audio/" + audioFile.FileName;
+                    audio.image = "/audio/img/" + audioImage.FileName;
                     audio.artistId = HttpContext.Session.GetInt32("userId");
                     audio.genreId = genreId; audio.moodId = moodId;
 
                     audioMarketContext.Audios.Add(audio);
                     audioMarketContext.SaveChanges();
 
-                    return RedirectToAction("AudioList", "Home");
+                    return RedirectToAction("List", "Audio");
                 }
                 else
                 {

@@ -26,16 +26,6 @@ namespace PRN_Project.Controllers
             return View();
         }
 
-        public IActionResult AudioList()
-        {
-            AudioMarketContext audioMarketContext = new AudioMarketContext();
-
-            ViewBag.GenreList = audioMarketContext.Genres.ToList();
-            ViewBag.MoodList = audioMarketContext.Moods.ToList();
-
-            return View(new AudioMarketContext().Audios.ToList());
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
