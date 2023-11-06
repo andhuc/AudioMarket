@@ -9,7 +9,7 @@
         <div class="col-8 text-center d-flex flex-column">
 
             @* seach form *@
-            <form asp-action="Search" method="get" class="position-relative" style="margin-top: 20vh;">
+            <form asp-controller="Audio" asp-action="Search" method="get" class="position-relative" style="margin-top: 20vh;">
                 <div class="input-group">
 
                     <input type="text" class="form-control" placeholder="Search Audio" style="height: 8vh;" />
@@ -29,11 +29,12 @@
                     <img src="@mostLikedAudio.image" style="width: 100%; aspect-ratio: 1" />
                 </div>
 
-                <div class="col-6">
-                    <h6>Most liked audio</h6>
-                    <h2 class="mt-3 fw-bold">@mostLikedAudio.title.ToUpper()</h2>
+                <div class="col-6 d-flex justify-content-start align-content-center flex-column">
+                    <h7>Most liked audio</h7>
+                    <a asp-controller="Audio" asp-action="Details" asp-route-id="@mostLikedAudio.id" 
+                        class="mt-3 fw-bold text-decoration-none text-light fs-5">@mostLikedAudio.title.ToUpper()</a>
 
-                    <h5 class="">@mostLikedAudio.User.name - @mostLikedAudio.Genre.genre - @mostLikedAudio.Mood.moodName</h5>
+                    <h6 class="">@mostLikedAudio.User.name - @mostLikedAudio.Genre.genre - @mostLikedAudio.Mood.moodName</h6>
                 </div>
 
             </div>

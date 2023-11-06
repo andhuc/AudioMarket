@@ -121,6 +121,7 @@ namespace PRN_Project.Controllers
                     audio.image = "/audio/img/" + audioImage.FileName;
                     audio.artistId = HttpContext.Session.GetInt32("userId");
                     audio.genreId = genreId; audio.moodId = moodId;
+                    audio.status = true;
 
                     audioMarketContext.Audios.Add(audio);
                     audioMarketContext.SaveChanges();
@@ -138,6 +139,11 @@ namespace PRN_Project.Controllers
                 // Handle exceptions, such as file I/O errors
                 return Redirect("./Upload?error");
             }
+        }
+
+        public ActionResult Profile()
+        {
+            return View();
         }
     }
 }

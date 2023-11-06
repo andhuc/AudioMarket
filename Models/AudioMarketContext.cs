@@ -35,6 +35,8 @@ namespace PRN_Project.Models
         public virtual User User { get; set; }
         public virtual Genre Genre { get; set; }
         public virtual Mood Mood { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
     }
 
     [Table("Discount")]
@@ -162,6 +164,8 @@ namespace PRN_Project.Models
 
         [Required]
         public bool status { get; set; }
+
+        public virtual ICollection<Favorite> Favorites { get; set; }
     }
 
 

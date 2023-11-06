@@ -1,0 +1,119 @@
+﻿@inject AudioMarketContext dbContext
+@{
+    String username = Context.Session.GetString("user");
+    User user = null;
+    List<Favorite> favorites = new List<Favorite>();
+    if (username != null)
+    {
+        user = dbContext.Users.FirstOrDefault(u => u.username == username);
+        favorites = user.Favorites.ToList();
+    }
+}
+@model Audio
+
+<div class="row justify-content-center">
+
+    <div class="col-6">
+
+        <div class="position-relative">
+
+            <img src="@Model.image" class="position-absolute w-100" style="z-index: -1; opacity: 0.5;">
+
+        </div>
+
+        <div class="text-center flex-column">
+
+            <h3 class="fw-bold mt-5">
+                @Model.title.ToUpper()
+
+                @if (username != null)
+                {
+                    <div onclick="updateFavorite(@user.id, @Model.id, this)">
+                        @if (@favorites.Any(f => f.audioId == Model.id))
+                        {
+                            <i class="bi fs-4 bi-heart-fill"></i>
+                        }
+                        else
+                        {
+                            <i class="bi fs-4 bi-heart"></i>
+                        }
+                    </div>
+                }
+            </h3>
+
+            <p class="mt-5">@Model.Genre.genre  -  @Model.Mood.moodName</p>
+
+            <audio id="audio" src="@Model.filename" class="w-100 mb-3"></audio>
+
+            <button id="playButton">Play</button>
+            <button id="pauseButton">Pause</button>
+
+            <input type="range" id="seekSlider" value="0">
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    function updateFavorite(userId, audioId, likeButton) {
+
+        let heartIcon = likeButton.querySelector('i');
+
+        if (heartIcon.classList.contains("bi-heart-fill")) {
+            heartIcon.classList.remove("bi-heart-fill");
+            heartIcon.classList.add("bi-heart");
+        } else if (heartIcon.classList.contains("bi-heart")) {
+            // Check if it contains "bi-heart" class and toggle it with "bi-heart-fill"
+            heartIcon.classList.remove("bi-heart");
+            heartIcon.classList.add("bi-heart-fill");
+        }
+
+        fetch(`../Favor?userId=${userId}&audioId=${audioId}`)
+    }
+
+</script>
+
+<script>
+    const audio = document.getElementById('audio');
+    const playButton = document.getElementById('playButton');
+    const pauseButton = document.getElementById('pauseButton');
+    const seekSlider = document.getElementById('seekSlider');
+    const volumeSlider = document.getElementById('volumeSlider');
+
+    function updateControls() {
+        seekSlider.value = audio.currentTime;
+        volumeSlider.value = audio.volume;
+    }
+
+    function seekAudio() {
+        audio.currentTime = seekSlider.value;
+    }
+
+    function setVolume() {
+        audio.volume = volumeSlider.value;
+    }
+
+    playButton.addEventListener('click', () => {
+        audio.play();
+    });
+
+    pauseButton.addEventListener('click', () => {
+        audio.pause();
+    });
+
+    seekSlider.addEventListener('input', seekAudio);
+
+    volumeSlider.addEventListener('input', setVolume);
+
+    audio.addEventListener('timeupdate', updateControls);
+
+    audio.addEventListener('ended', () => {
+        playButton.disabled = false;
+        pauseButton.disabled = true;
+    });
+</script>
