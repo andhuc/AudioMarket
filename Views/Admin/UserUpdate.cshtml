@@ -18,7 +18,7 @@
         </div>
         <div class="form-group">
             <label for="role">Role</label>
-            <select id="role" name="role" class="form-control" required>
+            <select id="role" name="role" class="form-control" value="@Model.role ? 1 : 0" required>
                 <option value="0">Normal User</option>
                 <option value="1">Admin</option>
             </select>

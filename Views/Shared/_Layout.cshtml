@@ -48,6 +48,11 @@
         }
     </style>
 
+    <script>
+        
+        
+
+    </script>
 </head>
 <body>
     <header>
@@ -70,6 +75,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="User" asp-action="Upload">Upload</a>
                         </li>
+                        @if (user_role == 1)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="UserManage">User Manage</a>
+                            </li>
+                        }
 
                     </ul>
                 </div>
@@ -84,13 +95,7 @@
                                     <i class="bi bi-cart"></i>Cart
                                 </a>
                             </li>
-                            @if(user_role == 1){
-                                <li class="nav-item">
-                                    <a class="nav-link text-white" asp-area="" asp-controller="Admin" asp-action="UserManage">
-                                        <i class=""></i>User Manage
-                                    </a>
-                                </li>
-                            }
+                            
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Profile">
                                     <i class="bi bi-person"></i>Profile
@@ -125,10 +130,21 @@
         </main>
     </div>
 
-    <footer class="footer text-muted">
+    <footer class="footer text-muted position-fixed" style="bottom: 0; height: 9vh;">
+
         <div class="container text-white">
             &copy; 2023 - @title
         </div>
+
+        <div class="col-2 position-absolute" style="bottom: 0; right: 0;">
+
+            <div>
+                <i class="bi bi-play" style=""></i>
+                @* <img src="/audio/img/1.gif" class="rounded-circle" style="height: 9vh; aspect-ratio: 1; opacity: 50%;"/> *@
+            </div>
+
+        </div>
+
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

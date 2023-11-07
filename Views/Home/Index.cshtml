@@ -4,6 +4,25 @@
     List<Mood> moodList = ViewBag.moodList;
 }
 
+<style>
+
+    /* Hide the default scrollbar */
+    .d-flex.overflow-auto::-webkit-scrollbar {
+        width: 0 !important;
+    }
+
+    /* Create a custom scrollbar track */
+    .d-flex.overflow-auto::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    /* Create a custom scrollbar thumb */
+    .d-flex.overflow-auto::-webkit-scrollbar-thumb {
+        background: transparent;
+    }
+
+</style>
+
 <div class="container">
     
     <div class="row d-flex justify-content-center">
@@ -53,29 +72,33 @@
 </div>
 
 <div class="container">
-    @* genre list *@
+    <!-- genre list -->
     <div class="row mt-5">
-        <h2 class="text-center">Genre</h2>
-        @foreach (Genre g in genreList)
-        {
-            <div class="col-lg-3">
-                <img src="img/genre/@(g.genre).png" alt="@g.genre" />
-                <h3 class="text-center">@g.genre</h3>
-            </div>
-        }
+        <h2 class="text-center fw-bold">Genre</h2>
+        <div class="d-flex mt-3 overflow-auto">
+            @foreach (Genre g in genreList)
+            {
+                <div class="col-3">
+                    <img src="img/genre/@(g.genre).png" alt="@g.genre" class="rounded img-fluid">
+                    <h3 class="text-center">@g.genre</h3>
+                </div>
+            }
+        </div>
     </div>
 </div>
 
 <div class="container">
-    @* mood list *@
+    <!-- mood list -->
     <div class="row mt-5">
-        <h2 class="text-center">Mood</h2>
-        @foreach (Mood m in moodList)
-        {
-            <div class="col-lg-3">
-                <img src="img/mood/@(m.moodName).png" alt="@m.moodName" />
-                <h3 class="text-center">@m.moodName</h3>
-            </div>
-        }
+        <h2 class="text-center fw-bold">Mood</h2>
+        <div class="d-flex mt-3 overflow-auto">
+            @foreach (Mood m in moodList)
+            {
+                <div class="col-3">
+                    <img src="img/mood/@(m.moodName).png" alt="@m.moodName" class="rounded img-fluid">
+                    <h3 class="text-center">@m.moodName</h3>
+                </div>
+            }
+        </div>
     </div>
 </div>
