@@ -1,0 +1,39 @@
+﻿@inject AudioMarketContext dbContext
+
+@model User
+
+
+<div class="row d-flex justify-content-center text-center">
+
+    <h3 class="fw-bold mt-4">User Manage</h3>
+
+    <form asp-action="UpdateUser" asp-route-id="@Model.id" method="post">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" class="form-control" value="@Model.username" required />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="text" id="password" name="password" class="form-control" value="@Model.password" required />
+        </div>
+        <div class="form-group">
+            <label for="role">Role</label>
+            <select id="role" name="role" class="form-control" required>
+                <option value="0">Normal User</option>
+                <option value="1">Admin</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" class="form-control" value="@Model.name" required />
+        </div>
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" name="status" class="form-control" required>
+                <option value="True">Normal</option>
+                <option value="False">Banned</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>

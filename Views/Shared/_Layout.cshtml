@@ -1,5 +1,6 @@
 ﻿@{
     var user = Context.Session.GetString("user");
+    var user_role = Context.Session.GetInt32("userRole");
     string title = "🎹 Audio Market";
 }
 
@@ -83,7 +84,13 @@
                                     <i class="bi bi-cart"></i>Cart
                                 </a>
                             </li>
-
+                            @if(user_role == 1){
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Admin" asp-action="UserManage">
+                                        <i class=""></i>User Manage
+                                    </a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Profile">
                                     <i class="bi bi-person"></i>Profile
