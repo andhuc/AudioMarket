@@ -8,16 +8,19 @@ namespace PRN_Project.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly AudioMarketContext _context;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            _context = new AudioMarketContext();
         }
 
         public IActionResult Index()
         {
             ViewBag.mostLikedAudio = new HomeServices().findMostLiked();
-
+            ViewBag.genreList = _context.Genres.ToList();
+            ViewBag.moodList = _context.Moods.ToList();
             return View();
         }
 

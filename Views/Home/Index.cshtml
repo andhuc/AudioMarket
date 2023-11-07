@@ -1,5 +1,7 @@
 ﻿@{
     Audio mostLikedAudio = ViewBag.mostLikedAudio;
+    List<Genre> genreList = ViewBag.genreList;
+    List<Mood> moodList = ViewBag.moodList;
 }
 
 <div class="container">
@@ -45,9 +47,35 @@
 
 
             </div>
-
-        </div>
+            </div>
 
     </div>
+</div>
 
+<div class="container">
+    @* genre list *@
+    <div class="row mt-5">
+        <h2 class="text-center">Genre</h2>
+        @foreach (Genre g in genreList)
+        {
+            <div class="col-lg-3">
+                <img src="img/genre/@(g.genre).png" alt="@g.genre" />
+                <h3 class="text-center">@g.genre</h3>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="container">
+    @* mood list *@
+    <div class="row mt-5">
+        <h2 class="text-center">Mood</h2>
+        @foreach (Mood m in moodList)
+        {
+            <div class="col-lg-3">
+                <img src="img/mood/@(m.moodName).png" alt="@m.moodName" />
+                <h3 class="text-center">@m.moodName</h3>
+            </div>
+        }
+    </div>
 </div>
