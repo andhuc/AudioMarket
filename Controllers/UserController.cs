@@ -26,6 +26,7 @@ namespace PRN_Project.Controllers
             {
                 HttpContext.Session.SetString("user", username);
                 HttpContext.Session.SetInt32("userId", user.id);
+                HttpContext.Session.SetInt32("userRole", user.role);
                 return RedirectToAction("Index", "Home");
             }
         }
