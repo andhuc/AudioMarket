@@ -72,7 +72,7 @@ namespace PRN_Project.Controllers
                 return BadRequest();
             }
 
-            if (ModelState.IsValid)
+            if (id == updatedUser.id)
             {
                 // Update user information in the database and save changes.
                 var existingUser = _context.Users.Find(id);
