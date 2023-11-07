@@ -37,7 +37,16 @@
 
                         <td>@user.id</td>
                         <td>@user.username</td>
-                        <td>@user.role</td>
+                        <td>
+                            @if (user.role == 1)
+                            {
+                                <span class="text-danger">Admin</span>
+                            }
+                            else
+                            {
+                                <span class="text-success">Customer</span>
+                            }
+                        </td>
                         <td>
                             @if (user.status)
                             {
@@ -52,21 +61,21 @@
                             <a asp-action="UserUpdate" asp-route-id="@user.id" class="btn btn-primary">Edit</a>
                         </td>
                         <td>
-                        @if (user.status)
-                        {
+                            @if (user.status)
+                            {
                                 <form id="banForm_@user.id" method="post" asp-action="BanUser">
-                                <input type="hidden" name="userId" value="@user.id" />
-                                <button type="submit" class="btn btn-danger" onclick="confirmBan(@user.id)">Ban</button>
-                            </form>
-                        }
-                        else
-                        {
+                                    <input type="hidden" name="userId" value="@user.id" />
+                                    <button type="submit" class="btn btn-danger" onclick="confirmBan(@user.id)">Ban</button>
+                                </form>
+                            }
+                            else
+                            {
                                 <form id="unbanForm_@user.id" method="post" asp-action="UnbanUser">
-                                <input type="hidden" name="userId" value="@user.id" />
-                                <button type="submit" class="btn btn-success" onclick="confirmUnban(@user.id)">Unban</button>
-                            </form>
-                        }
-                        </tr>
+                                    <input type="hidden" name="userId" value="@user.id" />
+                                    <button type="submit" class="btn btn-success" onclick="confirmUnban(@user.id)">Unban</button>
+                                </form>
+                            }
+                    </tr>
                 }
             </tbody>
         </table>
