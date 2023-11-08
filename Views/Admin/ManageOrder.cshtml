@@ -20,16 +20,17 @@
 
 @model List<User>
 
+<link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 
 <div class="row d-flex justify-content-center text-center">
 
     <h3 class="fw-bold mt-4">Manage Order</h3>
 
-    <h4 class="fw-bold mt-4">Total Order: </h4>
+    <h4 class="fw-bold mt-4">Total Order: @order.Count()</h4>
 
     <div class="col-8 mt-5">
 
-        <table class="table table-borderless text-light">
+        <table class="table table-borderless text-light" id="datatable">
             <thead class="text-center mb-5">
                 <tr class="mb-5">
                     <th class="border-bottom">Order Id</th>
@@ -49,6 +50,7 @@
                         <td>@o.User.name</td>
                         <td>@o.Audio.title</td>
                         <td>@o.status</td>
+                        <td>@o.purchaseDate</td>
                         @if (user.role != 1)
                         {
                             <td>
@@ -68,6 +70,12 @@
     </div>
 </div>
 
-<script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap.min.js"></script>
 
+<script>
+    $(document).ready(function () {
+        $('#datatable').DataTable();
+    });
 </script>

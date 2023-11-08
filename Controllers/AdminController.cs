@@ -147,7 +147,7 @@ namespace PRN_Project.Controllers
             return View();
         }
 
-        public IActionResult ManageSystem(int id)
+        public IActionResult ManageOrder(int id)
         {
             ViewBag.OrderList = _context.Orders.ToList();
             return View();
