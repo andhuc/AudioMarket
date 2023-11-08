@@ -167,10 +167,11 @@ namespace PRN_Project.Controllers
 
             // Read the cookie.
             string cookieValue = HttpContext.Request.Cookies[cookieName];
-            cookieValue = cookieValue.Substring(0, cookieValue.Length - 1);
 
             if (cookieValue != null && cookieValue.Length>0)
             {
+                cookieValue = cookieValue.Substring(0, cookieValue.Length - 1);
+
                 List<int> audioIdList = cookieValue.Split('-').Select(int.Parse).ToList();
                 audioList = _context.Audios
                             .Where(a => audioIdList.Contains(a.id))
