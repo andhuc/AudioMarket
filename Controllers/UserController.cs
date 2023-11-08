@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Castle.Core.Internal;
+using Microsoft.AspNetCore.Mvc;
 using PRN_Project.Models;
 
 namespace PRN_Project.Controllers
@@ -6,6 +7,14 @@ namespace PRN_Project.Controllers
 
     public class UserController : Controller
     {
+
+        private readonly AudioMarketContext _context;
+
+        public UserController(AudioMarketContext context)
+        {
+            _context = context;
+        }
+
         public ActionResult Login()
         {
             return View();
@@ -187,6 +196,29 @@ namespace PRN_Project.Controllers
         public ActionResult Profile()
         {
             return View();
+        }
+
+        public ActionResult Cart()
+        {
+            List<Audio> audioList = new List<Audio>();
+            string username = HttpContext.Session.GetString("user");
+
+            // Construct the cookie name based on the username.
+            string cookieName = username + "-audiocart";
+
+            // Read the cookie.
+            string cookieValue = HttpContext.Request.Cookies[cookieName];
+
+            if (cookieValue != null && cookieValue.Length>0)
+            {
+                List<int> audioIdList = cookieValue.Split('-').Select(int.Parse).ToList();
+                audioList = _context.Audios
+                            .Where(a => audioIdList.Contains(a.id))
+                            .ToList();
+            }
+
+            return View(audioList);
+
         }
     }
 }
