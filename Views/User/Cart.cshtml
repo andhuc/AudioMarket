@@ -1,0 +1,131 @@
+﻿@* @inject AudioMarketContext dbContext *@
+@{
+    String username = Context.Session.GetString("user");
+}
+@model List<Audio>
+
+<div class="row justify-content-center text-center">
+
+    <h3 class="fw-bold">YOUR CART</h3>
+
+    @if (Model.Count == 0)
+    {
+        <h6 class="mt-4">Empty</h6>
+    }
+
+    <div class="col-6">
+
+        <div class="text-start">
+
+            @foreach (Audio audio in Model)
+            {
+                <div class="audio mt-4 row">
+
+                    <div class="col-2">
+                        <img src="@audio.image" style="width: 100%; aspect-ratio: 1" />
+                    </div>
+
+                    <a class="col-8 d-flex justify-content-start align-content-center flex-column text-decoration-none text-light"
+                       asp-controller="Audio" asp-action="Details" asp-route-id="@audio.id">
+
+                        <h5 class="mt-3 fw-bold">@audio.title.ToUpper()</h5>
+
+                        <label class="">@audio.User.name - @audio.Genre.genre - @audio.Mood.moodName</label>
+
+                    </a>
+
+                    <div class="col-2 d-flex align-items-center">
+
+                        <button class="btn btn-light" onclick="setOrder(@audio.id, this.parentNode.parentNode)" data-toggle="modal" data-target="#confirmModal">Order</button>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="toast position-fixed" role="alert" aria-live="assertive" aria-atomic="true" style="right: 0; z-index: 2; top: 10vh">
+    <div class="toast-header text-black">
+        <strong class="mr-auto">Notification</strong>
+    </div>
+    <div class="toast-body text-black" id="toastContent">
+        Added to cart!
+    </div>
+</div>
+
+<div class="modal fade text-black" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm 🛒</h5>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure to order?</p>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="order()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    let audioId = 0;
+    let audioElement = null;
+    let username = '@username';
+
+    function setOrder(id, element) {
+        audioId = id;
+        audioElement = element;
+    }
+
+    function order() {
+
+        removeFromCart(audioId);
+        showToast('✅Order Success!');
+        audioElement.style.display = 'none';
+
+    }
+
+    function getCookie(name) {
+        const cookieName = name + "=";
+        const decodedCookies = decodeURIComponent(document.cookie);
+        const cookieArray = decodedCookies.split(";");
+
+        for (let i = 0; i < cookieArray.length; i++) {
+            let cookie = cookieArray[i].trim();
+            if (cookie.indexOf(cookieName) === 0) {
+                return cookie.substring(cookieName.length);
+            }
+        }
+        return ''; // Cookie not found
+    }
+
+    function removeFromCart(audioId) {
+
+        let cartName = username + '-audiocart';
+        let cookieValue = getCookie(cartName);
+        let audioIdCookie = `${audioId}-`;
+
+        if (cookieValue.includes(audioIdCookie)) {
+            cookieValue.replace(audioIdCookie, '');
+            showToast('✅Added to cart!');
+        }
+
+        document.cookie = cartName + "=" + cookieValue.slice(0, -1) + "; path=/";
+
+    }
+
+    function showToast(message) {
+        const toastContent = document.getElementById('toastContent');
+        toastContent.textContent = message;
+        $('.toast').toast('show')
+    }
+
+</script>

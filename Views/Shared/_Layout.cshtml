@@ -189,12 +189,12 @@
 
         }
 
-        function play(audioSrc, audioImage, audioId) {
+        function play(audioSrc, audioImage, audioId, title) {
             //check audio player hided
             if (playingAudio.style.display == 'none') {
 
+                audioTitle.textContent = title;
                 audioBanner.src = audioImage;
-
                 audioTitle.href = '/Audio/Details/' + audioId;
 
                 audioPlayer.src = audioSrc;

@@ -21,7 +21,7 @@
 
         </div>
 
-        <div class="text-center flex-column">
+        <div class="text-center flex-column" id="audioDetails">
 
             <h3 class="fw-bold mt-5">
                 @Model.title.ToUpper()
@@ -29,6 +29,7 @@
                 @if (username != null)
                 {
                     <div>
+                        @* favorite *@
                         @if (@favorites.Any(f => f.audioId == Model.id))
                         {
                             <i class="bi fs-4 bi-heart-fill" onclick="updateFavorite(@user.id, @Model.id, this)"></i>
@@ -37,17 +38,25 @@
                         {
                             <i class="bi fs-4 bi-heart" onclick="updateFavorite(@user.id, @Model.id, this)"></i>
                         }
+
                     </div>
                 }
             </h3>
 
             <p class="mt-5">@Model.Genre.genre  -  @Model.Mood.moodName</p>
 
-            <audio id="audio" src="@Model.filename" class="w-100 mb-3"></audio>
+            <div>
+                @if (username != null)
+                {
+                    @* make order *@
+                    @* <i class="bi bi-cart" style="font-size: 10rem;"></i> *@
+                    <button class="btn btn-light" onclick="addToCart('@username', @Model.id)">Add to cart</button>
+                }
+            </div>
 
-            <button class="rounded-circle btn border-0" onclick="play('@Model.filename', '@Model.image', @Model.id)">
+            <div class="rounded-circle btn border-0" onclick="play('@Model.filename', '@Model.image', @Model.id, '@Model.title')" id="playButton">
                 <i class ="bi bi-play text-white" style="font-size: 9rem"></i>
-            </button>
+            </div>
 
 
         </div>
@@ -56,11 +65,28 @@
 
 </div>
 
+<div class="toast position-fixed" role="alert" aria-live="assertive" aria-atomic="true" style="right: 0; z-index: 2; top: 10vh">
+    <div class="toast-header text-black">
+        <strong class="mr-auto">Notification</strong>
+    </div>
+    <div class="toast-body text-black" id="toastContent">
+        Added to cart!
+    </div>
+</div>
+
 <script>
 
-    function updateFavorite(userId, audioId, likeButton) {
+    const playButton = document.getElementById("playButton");
 
-        let heartIcon = likeButton.querySelector('i');
+    document.getElementById('audioDetails').addEventListener("mouseover", function () {
+        playButton.style.visibility = 'visible';
+    });
+
+    document.getElementById('audioDetails').addEventListener("mouseout", function () {
+        playButton.style.visibility = 'hidden';
+    });
+
+    function updateFavorite(userId, audioId, heartIcon) {
 
         if (heartIcon.classList.contains("bi-heart-fill")) {
             heartIcon.classList.remove("bi-heart-fill");
@@ -74,6 +100,42 @@
         fetch(`../Favor?userId=${userId}&audioId=${audioId}`)
     }
 
+    function getCookie(name) {
+        const cookieName = name + "=";
+        const decodedCookies = decodeURIComponent(document.cookie);
+        const cookieArray = decodedCookies.split(";");
+
+        for (let i = 0; i < cookieArray.length; i++) {
+            let cookie = cookieArray[i].trim();
+            if (cookie.indexOf(cookieName) === 0) {
+                return cookie.substring(cookieName.length);
+            }
+        }
+        return ''; // Cookie not found
+    }
+
+    function addToCart(username, audioId) {
+        
+        let cartName = username + '-audiocart';
+        let cookieValue = getCookie(cartName);
+        let audioIdCookie = `${audioId}-`;
+
+        if (!cookieValue.includes(audioIdCookie)) {
+            cookieValue += audioIdCookie;
+            showToast('✅Added to cart!');
+        } else {
+            showToast('Already in the cart!');
+        }
+
+        document.cookie = cartName + "=" + cookieValue.slice(0, -1) + "; path=/";
+
+    }
+
+    function showToast(message) {
+        const toastContent = document.getElementById('toastContent');
+        toastContent.textContent = message;
+        $('.toast').toast('show')
+    }
 </script>
 
 @* <script>
