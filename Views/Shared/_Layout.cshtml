@@ -50,11 +50,29 @@
         }
     </style>
 
-    <script>
-        
-        
+    <style>
 
-    </script>
+        #datatableDiv select, label, div, a, input {
+            color: white !important;
+            margin-bottom: 5px;
+        }
+
+        #datatable tr {
+            background-color: black !important;
+        }
+
+        #datatable_next, #datatable_previous {
+            color: white !important;
+        }
+
+        #datatable_paginate span .paginate_button {
+            color: white !important;
+            background-color: black !important;
+        }
+
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 </head>
 <body>
     <header>
@@ -221,6 +239,17 @@
             }
         }
 
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#datatable').DataTable({
+                "lengthChange": false,
+            });
+        });
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)
