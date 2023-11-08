@@ -20,15 +20,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
     <style>
-        body, footer{
-            background: rgba(26,28,28,1);
-            background: radial-gradient(circle, rgba(26,28,28,1) 0%, black 100%);
+        body{
+            /* background: url("https://e1.pxfuel.com/desktop-wallpaper/756/1004/desktop-wallpaper-dark-ultra-minimalist.jpg"); */
+            /* background: rgba(26,28,28,1);
+            background: radial-gradient(circle, rgba(26,28,28,1) 0%, black 100%); */
+            background: #1c1c1c; 
             color: white;
 
             font-family: "Poppins", sans-serif;
         }
 
-        header{
+        header, footer {
             background-color: #111212;
             color: white;
         }
@@ -136,11 +138,23 @@
             &copy; 2023 - @title
         </div>
 
-        <div class="col-2 position-absolute" style="bottom: 0; right: 0;">
 
-            <div>
-                <i class="bi bi-play" style=""></i>
-                @* <img src="/audio/img/1.gif" class="rounded-circle" style="height: 9vh; aspect-ratio: 1; opacity: 50%;"/> *@
+        @* audio player *@
+        <div class="col-3 position-absolute text-white align-items-center justify-content-center" style="bottom: 0; right: 0; height: 9vh; display: none" id="playingAudio">
+            
+            <audio id="audioPlayer" class="d-none" controls>
+                <source src="/audio/CANDY.mp3" type="audio/mp3">
+            </audio>
+
+            <img id="audioBanner" class="w-100 position-absolute opacity-25 rounded" style="top: 0; height: 36vh; pointer-events: none" />
+
+            <i class="bi bi-pause" style="font-size: 3rem;" onclick="playPause(this)" id="playPauseButton"></i>
+                
+            <div class="d-flex flex-column align-items-center col-6">
+
+                <a id="audioTitle" class="text-decoration-none text-white" style="height: 6vh">Lau Dai Tinh Ai</a>
+                <input type="range" class="form-range" id="audioSlider" disabled/> 
+
             </div>
 
         </div>
@@ -149,6 +163,66 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        const playingAudio = document.getElementById('playingAudio');
+        const playPauseButton = document.getElementById('playPauseButton');
+        const audioBanner = document.getElementById('audioBanner');
+        const audioTitle = document.getElementById('audioTitle');
+        const audioPlayer = document.getElementById('audioPlayer');
+
+        function playPause(element) {
+
+            if (element.classList.contains('bi-play')) {
+                //play audio
+                audioPlayer.play();
+
+                element.classList.remove('bi-play');
+                element.classList.add('bi-pause');
+            } else if (element.classList.contains('bi-pause')) {
+                //pause audio
+                audioPlayer.pause();
+
+                element.classList.remove('bi-pause');
+                element.classList.add('bi-play');
+            }
+
+        }
+
+        function play(audioSrc, audioImage, audioId) {
+            //check audio player hided
+            if (playingAudio.style.display == 'none') {
+
+                audioBanner.src = audioImage;
+
+                audioTitle.href = '/Audio/Details/' + audioId;
+
+                audioPlayer.src = audioSrc;
+                audioPlayer.play();
+
+                showPlayer();
+
+            }
+            console.log('ahdbwakj')
+        }
+
+        function showPlayer() {
+            playingAudio.style.display = 'flex';
+            if (playPauseButton.classList.contains('bi-play')) {
+                playPauseButton.classList.remove('bi-play');
+                playPauseButton.classList.add('bi-pause');
+            }
+        }
+
+        function hidePlayer() {
+            playingAudio.style.display = 'none';
+            if (playPauseButton.classList.contains('bi-pause')) {
+                playPauseButton.classList.remove('bi-pause');
+                playPauseButton.classList.add('bi-play');
+            }
+        }
+
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
