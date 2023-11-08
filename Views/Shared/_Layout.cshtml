@@ -193,7 +193,7 @@
             //check audio player hided
             if (playingAudio.style.display == 'none') {
 
-                audioTitle.textContent = title;
+                audioTitle.textContent = title.toUpperCase();
                 audioBanner.src = audioImage;
                 audioTitle.href = '/Audio/Details/' + audioId;
 
@@ -203,7 +203,6 @@
                 showPlayer();
 
             }
-            console.log('ahdbwakj')
         }
 
         function showPlayer() {

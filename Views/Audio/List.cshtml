@@ -8,6 +8,8 @@
         user = dbContext.Users.FirstOrDefault(u => u.username == username);
         favorites = user.Favorites.ToList();
     }
+
+    
 }
 
 @model List<Audio>

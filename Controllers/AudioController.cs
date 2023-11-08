@@ -20,12 +20,11 @@ namespace PRN_Project.Controllers
 
         public IActionResult List()
         {
-            AudioMarketContext audioMarketContext = new AudioMarketContext();
 
-            ViewBag.GenreList = audioMarketContext.Genres.ToList();
-            ViewBag.MoodList = audioMarketContext.Moods.ToList();
+            ViewBag.GenreList = _context.Genres.ToList();
+            ViewBag.MoodList = _context.Moods.ToList();
 
-            return View(new AudioMarketContext().Audios.ToList());
+            return View(_context.Audios.ToList());
         }
 
         public IActionResult Favor(int userId, int audioId)
