@@ -257,7 +257,7 @@ VALUES
   ('john123', 'password123', 'John Doe', 0),
   ('jane456', 'password456', 'Jane Smith', 0),
   ('mike789', 'password789', 'Mike Jones', 0),
-  ('chris012', 'password012', 'Chris Lee', 0),
+  ('user', '1', 'Chris Lee', 0),
   ('admin', 'admin', 'Admin', 1);
 
 -- Genres 
@@ -281,11 +281,11 @@ VALUES
 -- Audio
 INSERT INTO Audio (artistId, genreId, moodId, filename, title, [image])
 VALUES
-  (4, 2, 1, '/audio/song1.mp3', 'vocal', '/audio/img/1.gif'),
-  (4, 5, 3, '/audio/song2.mp3', 'drum loop', '/audio/img/2.png'),
-  (4, 1, 2, '/audio/song3.mp3', 'piano loop', '/audio/img/3.png'),
-  (3, 4, 4, '/audio/song4.mp3', 'flute melody', '/audio/img/4.png'),
-  (2, 3, 5, '/audio/song5.mp3', 'gc beat', '/audio/img/5.png');
+  (4, 2, 1, '/audio/CANDY.mp3', 'candy', '/audio/img/1.gif'),
+  (4, 5, 3, '/audio/MARVEL.mp3', 'marvel', '/audio/img/2.png'),
+  (4, 1, 2, '/audio/LILY.mp3', 'lily', '/audio/img/3.png'),
+  (3, 4, 4, '/audio/LUCKY.mp3', 'lucky', '/audio/img/4.png'),
+  (2, 3, 5, '/audio/AIR.mp3', 'lau dai tinh ai', '/audio/img/5.png');
   
 -- Reviews
 INSERT INTO Review (userId, audioId, rating, comment)  

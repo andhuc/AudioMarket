@@ -1,5 +1,6 @@
 ﻿using Castle.Core.Internal;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PRN_Project.Models;
 
 namespace PRN_Project.Controllers
@@ -208,6 +209,7 @@ namespace PRN_Project.Controllers
 
             // Read the cookie.
             string cookieValue = HttpContext.Request.Cookies[cookieName];
+            cookieValue = cookieValue.Substring(0, cookieValue.Length - 1);
 
             if (cookieValue != null && cookieValue.Length>0)
             {
@@ -220,5 +222,52 @@ namespace PRN_Project.Controllers
             return View(audioList);
 
         }
+
+        public IActionResult Favor(int userId, int audioId)
+        {
+            DbSet<Favorite> favorites = _context.Favorites;
+            Favorite favorite = favorites.FirstOrDefault(f => f.userId == userId && f.audioId == audioId);
+
+            if (favorite != null)
+            {
+                favorites.Remove(favorite);
+            }
+            else
+            {
+                favorites.Add(new Favorite { userId = userId, audioId = audioId });
+            }
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+        public IActionResult Order(int audioId)
+        {
+            string username = HttpContext.Session.GetString("user");
+            User user = _context.Users.FirstOrDefault(u => u.username == username);
+            if (user == null) return BadRequest();
+
+            Order order = _context.Orders.FirstOrDefault(o => o.audioId == audioId && o.buyerId == user.id);
+
+            if(order == null)
+            {
+                Order o = new Order();
+
+                o.audioId = audioId;
+                o.buyerId = user.id;
+                o.purchaseDate = DateTime.Now;
+
+                _context.Orders.Add(o);
+                _context.SaveChanges();
+
+                return Ok();
+            } else
+            {
+                return BadRequest();
+            }
+        }
+
+
     }
 }

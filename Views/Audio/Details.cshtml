@@ -17,7 +17,7 @@
 
         <div class="position-relative">
 
-            <img src="@Model.image" class="position-absolute w-100" style="z-index: -1; opacity: 0.5;">
+            <img src="@Model.image" class="position-absolute w-100 rounded" style="z-index: -1; opacity: 0.5;">
 
         </div>
 
@@ -127,7 +127,7 @@
             showToast('Already in the cart!');
         }
 
-        document.cookie = cartName + "=" + cookieValue.slice(0, -1) + "; path=/";
+        document.cookie = cartName + "=" + cookieValue + "; path=/";
 
     }
 

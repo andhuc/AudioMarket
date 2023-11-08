@@ -88,9 +88,19 @@
     function order() {
 
         removeFromCart(audioId);
-        showToast('✅Order Success!');
         audioElement.style.display = 'none';
 
+        fetch(`./Order?audioId=${audioId}`)
+            .then(response => {
+                if (response.ok) {
+                    showToast('✅Order success!');
+                } else {
+                    showToast('🚫You already order this audio!');
+                }
+            })
+            .catch(error => {
+                showToast('Error :' + error);
+            });
     }
 
     function getCookie(name) {
@@ -113,12 +123,9 @@
         let cookieValue = getCookie(cartName);
         let audioIdCookie = `${audioId}-`;
 
-        if (cookieValue.includes(audioIdCookie)) {
-            cookieValue.replace(audioIdCookie, '');
-            showToast('✅Added to cart!');
-        }
+        cookieValue = cookieValue.replace(audioIdCookie, '');
 
-        document.cookie = cartName + "=" + cookieValue.slice(0, -1) + "; path=/";
+        document.cookie = cartName + "=" + cookieValue + "; path=/";
 
     }
 

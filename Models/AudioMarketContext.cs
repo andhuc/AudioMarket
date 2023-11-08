@@ -116,12 +116,8 @@ namespace PRN_Project.Models
         [Column(TypeName = "datetime")]
         public DateTime purchaseDate { get; set; }
 
-        [ForeignKey("Discount")]
-        public int? discountId { get; set; }
-
         public virtual User User { get; set; }
         public virtual Audio Audio { get; set; }
-        public virtual Discount Discount { get; set; }
     }
 
     [Table("Review")]
