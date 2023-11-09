@@ -1,0 +1,81 @@
+﻿@inject AudioMarketContext dbContext
+@{
+    String username = Context.Session.GetString("user");
+    User user = null;
+    List <Order> order = new List<Order>();
+    if(username != null)
+    {
+        user = dbContext.Users.FirstOrDefault(u => u.username == username);
+        if (user.role != 1)
+        {
+            order = ViewBag.OrderList;
+            order = order.Where(o => o.buyerId == user.id).ToList();
+        }
+        else
+        {
+            order = ViewBag.OrderList;
+        }
+    }
+}
+
+@model List<User>
+
+<link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+
+<div class="row d-flex justify-content-center text-center">
+
+    <h3 class="fw-bold mt-4">Manage Order</h3>
+
+    <h4 class="fw-bold mt-4">Total Order: @order.Count()</h4>
+
+    <div class="col-8 mt-5">
+
+        <table class="table table-borderless text-light" id="datatable">
+            <thead class="text-center mb-5">
+                <tr class="mb-5">
+                    <th class="border-bottom">Order Id</th>
+                    <th class="border-bottom">Buyer Name</th>
+                    <th class="border-bottom">Audio Name</th>
+                    <th class="border-bottom">Status</th>
+                    <th class="border-bottom">Order Date</th>
+                    <th class="border-bottom" colspan="2">Action</th>
+                </tr>
+            </thead>
+            <tbody class="text-center mt-5">
+                @foreach (var o in order)
+                {
+                    <tr class="mt-5 user-select-all">
+
+                        <td>@o.id</td>
+                        <td>@o.User.name</td>
+                        <td>@o.Audio.title</td>
+                        <td>@o.status</td>
+                        <td>@o.purchaseDate</td>
+                        @if (user.role != 1)
+                        {
+                            <td>
+                                <a asp-action="ManageSystem" asp-route-id="@o.id" class="btn btn-primary">Detail</a>
+                            </td>
+                        }else
+                        {
+                            <td>
+                                <a asp-action="ManageSystem" asp-route-id="@o.id" class="btn btn-primary">Edit</a>
+                            </td>
+                        }
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#datatable').DataTable();
+    });
+</script>

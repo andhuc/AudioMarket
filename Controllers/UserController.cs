@@ -82,6 +82,48 @@ namespace PRN_Project.Controllers
             return RedirectToAction("Login", "User");
         }
 
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(string username, string oldpassword, string newpassword, string repassword)
+        {
+            AudioMarketContext audioMarketContext = new AudioMarketContext();
+
+            username = username.Trim();
+            oldpassword = oldpassword.Trim();
+            newpassword = newpassword.Trim();
+            repassword = repassword.Trim();
+
+            User user = audioMarketContext.Users.FirstOrDefault(u => u.username == username);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = "Invalid username!";
+                return View();
+            }
+
+            if (newpassword != repassword)
+            {
+                ViewBag.ErrorMessage = "2 password aren't same!";
+                return View();
+            }
+            else if (oldpassword != user.password)
+            {
+                ViewBag.ErrorMessage = "Wrong old password!";
+                return View();
+            }
+            else
+            {
+                user.password = newpassword;
+                audioMarketContext.SaveChanges();
+                ViewBag.SuccessMessage = "Change Password successfully";
+                return RedirectToAction("Profile", "User");
+            }
+        }
+
         public ActionResult Logout()
         {
             HttpContext.Session.Clear();

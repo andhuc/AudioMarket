@@ -95,10 +95,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="User" asp-action="Upload">Upload</a>
                         </li>
+                        
                         @if (user_role == 1)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="UserManage">User Manage</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="ManageSystem">Manage Order</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="UserManage">Manage User</a>
                             </li>
                         }
 
@@ -112,19 +116,25 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Cart">
-                                    <i class="bi bi-cart"></i>Cart
+                                    <i class="bi bi-cart"></i> Cart
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="MyOrder">
+                                    <i class="bi bi-box-seam"></i> My Order
                                 </a>
                             </li>
                             
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Profile">
-                                    <i class="bi bi-person"></i>Profile
+                                    <i class="bi bi-person"></i> Profile
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Logout">
-                                    <i class="bi bi-box-arrow-right"></i>Logout
+                                    <i class="bi bi-box-arrow-right"></i> Logout
                                 </a>
                             </li>
                         }
@@ -132,7 +142,7 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Login">
-                                    <i class="bi bi-box-arrow-in-right"></i>Login
+                                    <i class="bi bi-box-arrow-in-right"></i> Login
                                 </a>
                             </li>
                         }
