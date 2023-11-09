@@ -10,6 +10,7 @@ namespace PRN_Project.Services
         {
             Favorite favorite = new AudioMarketContext().Favorites
                 .FromSqlRaw("select audioId, COUNT(userId) as userId from Favorite group by audioId")
+                .Where(f => f.Audio.status)
                 .OrderByDescending(f => f.userId)
                 .FirstOrDefault();
 

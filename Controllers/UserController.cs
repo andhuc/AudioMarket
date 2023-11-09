@@ -130,14 +130,12 @@ namespace PRN_Project.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Upload()
+        public IActionResult Upload()
         {
             if(HttpContext.Session.GetString("user")==null) return RedirectToAction("Login", "User");
 
-            AudioMarketContext audioMarketContext = new AudioMarketContext();
-
-            ViewBag.GenreList = audioMarketContext.Genres.ToList();
-            ViewBag.MoodList = audioMarketContext.Moods.ToList();
+            ViewBag.GenreList = _context.Genres.ToList();
+            ViewBag.MoodList = _context.Moods.ToList();
 
             return View();
         }
@@ -146,7 +144,6 @@ namespace PRN_Project.Controllers
         public IActionResult Upload(string audioTitle, IFormFile audioFile, IFormFile audioImage, int genreId, int moodId)
         {
             String imagePath = "/audio/img/";
-            AudioMarketContext audioMarketContext = new AudioMarketContext();
 
             try
             {
@@ -176,8 +173,8 @@ namespace PRN_Project.Controllers
                     audio.genreId = genreId; audio.moodId = moodId;
                     audio.status = true;
 
-                    audioMarketContext.Audios.Add(audio);
-                    audioMarketContext.SaveChanges();
+                    _context.Audios.Add(audio);
+                    _context.SaveChanges();
 
                     return RedirectToAction("List", "Audio");
                 }
@@ -276,6 +273,10 @@ namespace PRN_Project.Controllers
 
             ViewBag.GenreList = _context.Genres.ToList();
             ViewBag.MoodList = _context.Moods.ToList();
+            ViewBag.OrderList = _context.Orders
+                                        .Where(o => o.Audio.artistId == user.id)
+                                        .OrderBy(o => o.audioId)
+                                        .ToList();
 
             return View(_context.Audios.Where(a => a.artistId == user.id).ToList());
         }
