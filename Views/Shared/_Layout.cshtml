@@ -50,6 +50,58 @@
         }
     </style>
 
+    @* switch *@
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 20px;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 16px;
+                width: 16px;
+                left: 2px;
+                bottom: 2px;
+                background-color: white;
+                transition: .4s;
+                border-radius: 50%;
+            }
+
+        input:checked + .slider {
+            background-color: gray;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px gray;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(16px);
+        }
+    </style>
+
     <style>
 
         #datatableDiv label, #datatableDiv div, #datatableDiv a, #datatableDiv input {
@@ -58,7 +110,8 @@
         }
 
         #datatable tr {
-            background-color: black !important;
+            background-color: transparent !important;
+            border: 1px white solid !important
         }
 
         #datatable_next, #datatable_previous {
@@ -67,7 +120,7 @@
 
         #datatable_paginate span .paginate_button {
             color: white !important;
-            background-color: black !important;
+            background-color: transparent !important;
         }
 
     </style>
@@ -98,32 +151,47 @@
                         
                         @if (user_role == 1)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="ManageSystem">Manage Order</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="UserManage">Manage User</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Manage System
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color: #111212;">
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Admin" asp-action="UserManage">Manage User</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Admin" asp-action="ManageAudio">Manage Audio</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Admin" asp-action="ManageOrder">Manage Order</a>
+                                </div>
                             </li>
                         }
 
                     </ul>
                 </div>
 
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1 justify-content-end">
 
                         @if (user != null)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Cart">
-                                    <i class="bi bi-cart"></i> Cart
-                                </a>
-                            </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="MyOrder">
-                                    <i class="bi bi-box-seam"></i> My Order
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @user
                                 </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="background-color: #111212;">
+
+                                    <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Cart">
+                                        <i class="bi bi-cart"></i> Cart
+                                    </a>
+
+                                    <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="MyOrder">
+                                        <i class="bi bi-box-seam"></i> My Order
+                                    </a>
+
+                                    <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="MyAudio">
+                                        <i class="bi bi-music-note-beamed"></i> My Audio
+                                    </a>
+
+                                </div>
                             </li>
                             
                             <li class="nav-item">

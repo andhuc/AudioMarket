@@ -24,7 +24,7 @@ namespace PRN_Project.Controllers
             ViewBag.GenreList = _context.Genres.ToList();
             ViewBag.MoodList = _context.Moods.ToList();
 
-            return View(_context.Audios.ToList());
+            return View(_context.Audios.Where(a => a.status).ToList());
         }
 
         public IActionResult Favor(int userId, int audioId)

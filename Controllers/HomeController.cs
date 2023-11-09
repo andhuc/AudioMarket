@@ -21,6 +21,7 @@ namespace PRN_Project.Controllers
             ViewBag.mostLikedAudio = new HomeServices().findMostLiked();
             ViewBag.genreList = _context.Genres.ToList();
             ViewBag.moodList = _context.Moods.ToList();
+
             return View();
         }
 

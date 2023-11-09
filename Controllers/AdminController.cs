@@ -152,6 +152,24 @@ namespace PRN_Project.Controllers
             ViewBag.OrderList = _context.Orders.ToList();
             return View();
         }
+
+        public IActionResult ManageAudio(int id)
+        {
+            ViewBag.GenreList = _context.Genres.ToList();
+            ViewBag.MoodList = _context.Moods.ToList();
+
+            return View(_context.Audios.ToList());
+        }
+
+        public IActionResult UpdateAudioStatus(int audioId, Boolean status)
+        {
+            Audio audio = _context.Audios.FirstOrDefault(a => a.id == audioId);
+
+            audio.status = status;
+            _context.SaveChanges();
+
+            return Ok();
+        }
     }
 }
 

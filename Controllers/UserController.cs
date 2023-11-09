@@ -25,7 +25,7 @@ namespace PRN_Project.Controllers
         public ActionResult Login(string username, string password)
         {
             
-            User user = new AudioMarketContext().Users.FirstOrDefault(u => u.username == username);
+            User user = new AudioMarketContext().Users.FirstOrDefault(u => u.username == username && u.status);
 
             if (user == null || !user.password.Equals(password))
             {
