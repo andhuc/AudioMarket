@@ -52,7 +52,7 @@
 
     <style>
 
-        #datatableDiv select, label, div, a, input {
+        #datatableDiv label, #datatableDiv div, #datatableDiv a, #datatableDiv input {
             color: white !important;
             margin-bottom: 5px;
         }
@@ -166,7 +166,7 @@
 
             <img id="audioBanner" class="w-100 position-absolute opacity-25 rounded" style="top: 0; height: 36vh; pointer-events: none" />
 
-            <i class="bi bi-pause" style="font-size: 3rem;" onclick="playPause(this)" id="playPauseButton"></i>
+            <i class="bi bi-play" style="font-size: 3rem;" onclick="playPause(this)" id="playPauseButton"></i>
                 
             <div class="d-flex flex-column align-items-center col-6">
 
@@ -208,27 +208,29 @@
         }
 
         function play(audioSrc, audioImage, audioId, title) {
-            //check audio player hided
-            if (playingAudio.style.display == 'none') {
+            audioPlayer.src = audioSrc;
+            audioPlayer.play();
 
-                audioTitle.textContent = title.toUpperCase();
-                audioBanner.src = audioImage;
-                audioTitle.href = '/Audio/Details/' + audioId;
+            showPlayer(audioImage, audioId, title);
 
-                audioPlayer.src = audioSrc;
-                audioPlayer.play();
+            sessionStorage.setItem('audioSrc', audioSrc);
+            sessionStorage.setItem('audioImage', audioImage);
+            sessionStorage.setItem('audioId', audioId);
+            sessionStorage.setItem('title', title);
 
-                showPlayer();
-
-            }
-        }
-
-        function showPlayer() {
-            playingAudio.style.display = 'flex';
             if (playPauseButton.classList.contains('bi-play')) {
                 playPauseButton.classList.remove('bi-play');
                 playPauseButton.classList.add('bi-pause');
             }
+        }
+
+        function showPlayer(audioImage, audioId, title) {
+
+            audioTitle.textContent = title.toUpperCase();
+            audioBanner.src = audioImage;
+            audioTitle.href = '/Audio/Details/' + audioId;
+
+            playingAudio.style.display = 'flex';
         }
 
         function hidePlayer() {
@@ -239,6 +241,16 @@
             }
         }
 
+        // check session
+        if (sessionStorage.getItem('audioSrc')) {
+            audioPlayer.src = sessionStorage.getItem('audioSrc');
+
+            let audioImage = sessionStorage.getItem('audioImage');
+            let audioId = sessionStorage.getItem('audioId');
+            let title = sessionStorage.getItem('title');
+
+            showPlayer(audioImage, audioId, title);
+        }
     </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
