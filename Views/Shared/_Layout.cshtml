@@ -201,7 +201,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Logout">
+                                <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Logout" onclick="removeCookie('audioSrc')">
                                     <i class="bi bi-box-arrow-right"></i> Logout
                                 </a>
                             </li>
@@ -291,10 +291,10 @@
 
             showPlayer(audioImage, audioId, title);
 
-            sessionStorage.setItem('audioSrc', audioSrc);
-            sessionStorage.setItem('audioImage', audioImage);
-            sessionStorage.setItem('audioId', audioId);
-            sessionStorage.setItem('title', title);
+            setCookie('audioSrc', audioSrc);
+            setCookie('audioImage', audioImage);
+            setCookie('audioId', audioId);
+            setCookie('title', title);
 
             if (playPauseButton.classList.contains('bi-play')) {
                 playPauseButton.classList.remove('bi-play');
@@ -319,15 +319,32 @@
             }
         }
 
-        // check session
-        if (sessionStorage.getItem('audioSrc')) {
-            audioPlayer.src = sessionStorage.getItem('audioSrc');
+        // check cookie
+        if (getCookie('audioSrc')) {
+            audioPlayer.src = getCookie('audioSrc');
 
-            let audioImage = sessionStorage.getItem('audioImage');
-            let audioId = sessionStorage.getItem('audioId');
-            let title = sessionStorage.getItem('title');
+            let audioImage = getCookie('audioImage');
+            let audioId = getCookie('audioId');
+            let title = getCookie('title');
 
             showPlayer(audioImage, audioId, title);
+        }
+
+        // Read cookie
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        // Write cookie
+        function setCookie(name, value) {
+            document.cookie = `${name}=${value}; path=/`;
+        }
+
+        // Remove a cookie
+        function removeCookie(name) {
+            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
         }
     </script>
 
