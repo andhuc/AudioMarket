@@ -153,7 +153,7 @@ namespace PRN_Project.Controllers
             return View();
         }
 
-        public IActionResult ManageAudio(int id)
+        public IActionResult ManageAudio()
         {
             ViewBag.GenreList = _context.Genres.ToList();
             ViewBag.MoodList = _context.Moods.ToList();

@@ -269,6 +269,16 @@ namespace PRN_Project.Controllers
             }
         }
 
+        public IActionResult MyAudio()
+        {
+            string username = HttpContext.Session.GetString("user");
+            User user = _context.Users.FirstOrDefault(u => u.username == username);
+
+            ViewBag.GenreList = _context.Genres.ToList();
+            ViewBag.MoodList = _context.Moods.ToList();
+
+            return View(_context.Audios.Where(a => a.artistId == user.id).ToList());
+        }
 
     }
 }
