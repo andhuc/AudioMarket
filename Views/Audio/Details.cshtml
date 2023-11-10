@@ -8,6 +8,8 @@
         user = dbContext.Users.FirstOrDefault(u => u.username == username);
         favorites = user.Favorites.ToList();
     }
+
+    List<Review> reviews = ViewBag.ReviewList;
 }
 @model Audio
 
@@ -50,7 +52,7 @@
                 {
                     @* make order *@
                     @* <i class="bi bi-cart" style="font-size: 10rem;"></i> *@
-                    <button class="btn btn-light" onclick="addToCart('@username', @Model.id)">Add to cart</button>
+                    <button class="btn btn-light" onclick="addToCart('@user.id', @Model.id)">Add to cart</button>
                 }
             </div>
 
@@ -61,9 +63,17 @@
 
         </div>
 
+        @* review *@
+        <div class="text-center" style="margin-top: 40vh;">
+
+            <h3 class="fw-bold">REVIEW</h3>
+
+        </div>
+
     </div>
 
 </div>
+
 
 <div class="toast position-fixed" role="alert" aria-live="assertive" aria-atomic="true" style="right: 0; z-index: 2; top: 10vh">
     <div class="toast-header text-black">

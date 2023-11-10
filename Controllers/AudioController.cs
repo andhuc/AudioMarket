@@ -49,6 +49,7 @@ namespace PRN_Project.Controllers
         public IActionResult Details(int id)
         {
             Audio audio = _context.Audios.FirstOrDefault(a => a.id == id);
+            ViewBag.ReviewList = _context.Reviews.Where(r => r.audioId == id).ToList();
 
             return View(audio);
         }

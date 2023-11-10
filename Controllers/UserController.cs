@@ -229,7 +229,7 @@ namespace PRN_Project.Controllers
         public ActionResult Cart()
         {
             List<Audio> audioList = new List<Audio>();
-            string username = HttpContext.Session.GetString("user");
+            int? username = HttpContext.Session.GetInt32("userId");
 
             // Construct the cookie name based on the username.
             string cookieName = username + "-audiocart";
