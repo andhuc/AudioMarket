@@ -41,6 +41,36 @@ namespace PRN_Project.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult LoginGoogle(string email, string name)
+        {
+
+            var user = _context.Users.FirstOrDefault(u => u.username == email && u.status);
+
+            if (user == null)
+            {
+                User newUser = new User();
+                newUser.username = email;
+                newUser.name = name;
+                newUser.status = true;
+                
+                _context.Users.Add(newUser);
+                _context.SaveChanges();
+
+                HttpContext.Session.SetString("user", email);
+                HttpContext.Session.SetInt32("userId", newUser.id);
+                HttpContext.Session.SetInt32("userRole", newUser.role);
+            }
+            else
+            {
+                HttpContext.Session.SetString("user", email);
+                HttpContext.Session.SetInt32("userId", user.id);
+                HttpContext.Session.SetInt32("userRole", user.role);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
         public ActionResult Register()
         {
             return View();

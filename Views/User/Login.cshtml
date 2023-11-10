@@ -1,4 +1,24 @@
-﻿<div class="container">
+﻿<script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+
+<!-- Add additional services you want to use -->
+<script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
+
+<script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyB9z0KvbNijNljmrvcMF6wcUAgy5OdoKVY",
+        authDomain: "test-4617f.firebaseapp.com",
+        projectId: "test-4617f",
+        storageBucket: "test-4617f.appspot.com",
+        messagingSenderId: "1023853918396",
+        appId: "1:1023853918396:web:f09e2291a82517609638b9"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+</script>
+
+<div class="container">
     <div class="row d-flex justify-content-center">
         <div class="col-md-4 col-md-offset-4">
 
@@ -16,12 +36,14 @@
                     <input type="password" id="password" name="password" class="form-control customBg">
                 </div>
 
-                <div class="form-group mt-3">
+                <div class="form-group mt-3 d-flex">
                     <input type="submit" value="Login" class="btn btn-primary">
+
+                    <p class="btn btn-secondary m-0 ms-5" onclick="loginWithGoogle()">Login Google</p>
                 </div>
 
                 <div>
-                    <a class="link-secondary mt-5 text-white" asp-action="Register">Register</a>
+                    <a class="link-secondary mt-5 text-white text-decoration-none" asp-action="Register">Register</a>
                 </div>
 
             </form>
@@ -33,3 +55,31 @@
         </div>
     </div>
 </div>
+
+<form asp-action="LoginGoogle" method="post" class="loginGoogleForm" style="display: none;">
+    <input type="hidden" id="emailInput" name="email" value="?">
+    <input type="hidden" id="nameInput" name="name" value="?">
+</form>
+
+<script>
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    function loginWithGoogle() {
+
+        firebase.auth().signInWithPopup(provider).then(function (result) {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            let token = result.credential.accessToken;
+            // The signed-in user info.
+            let user = result.user;
+
+            let form = document.querySelector('.loginGoogleForm');
+
+            let input = form.querySelector('#emailInput');
+            input.value = user.email;
+            let name = form.querySelector('#nameInput');
+            name.value = user.displayName;
+
+            form.submit();
+        });
+    }
+</script>

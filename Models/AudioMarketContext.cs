@@ -151,7 +151,7 @@ namespace PRN_Project.Models
         public string username { get; set; }
 
         [MaxLength(255)]
-        public string password { get; set; }
+        public string? password { get; set; }
 
         public int role { get; set; }
 
