@@ -19,7 +19,7 @@
 
         <div class="position-relative">
 
-            <img src="@Model.image" class="position-absolute w-100 rounded" style="z-index: -1; opacity: 0.5;">
+            <img src="@Model.image" class="position-absolute w-100 rounded" style="z-index: -1; opacity: 0.5; aspect-ratio: 1">
 
         </div>
 
@@ -64,9 +64,38 @@
         </div>
 
         @* review *@
-        <div class="text-center" style="margin-top: 40vh;">
+        <div class="text-center" style="margin-top: 35vh;">
 
             <h3 class="fw-bold">REVIEW</h3>
+
+            <div id="commentContainer">
+
+                @foreach(Review review in reviews)
+                {
+                    <div class="media d-flex align-items-center mt-4">
+                        <i class="bi bi-person-circle fs-2 mr-3"></i>
+
+                        <div class="media-body text-start ms-4">
+                            <h6 class="mt-0 fw-bold">@review.User.name</h6>
+
+                            <p>@review.comment</p>
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+            @if(username != null)
+            {
+                <div class="mt-5">
+                    <form class="input-group" onsubmit="sendReview(this, event, '@user.name', @Model.id)">
+                        <input type="text" class="form-control text-white bg-black btn-outline-dark" placeholder="Type your comment...">
+                        <div class="input-group-append">
+                            <button class="btn btn-light" type="button">Send</button>
+                        </div>
+                    </form>
+                </div>
+            }
 
         </div>
 
@@ -146,6 +175,49 @@
         toastContent.textContent = message;
         $('.toast').toast('show')
     }
+
+    function sendReview(element, event, username, audioId) {
+        event.preventDefault();
+
+        let input = element.querySelector('input');
+
+        fetch(`/User/Review?comment=${input.value}&audioId=${audioId}`);
+        insertComment(username, input.value);
+
+        input.value = '';
+    }
+
+    function insertComment(username, comment) {
+        var commentContainer = document.createElement('div');
+        commentContainer.className = 'media d-flex align-items-center mt-4';
+
+        // User Icon
+        var userIcon = document.createElement('i');
+        userIcon.className = 'bi bi-person-circle fs-2 mr-3';
+
+        // Media Body
+        var mediaBody = document.createElement('div');
+        mediaBody.className = 'media-body text-start ms-4';
+
+        // User Name
+        var userName = document.createElement('h6');
+        userName.className = 'mt-0 fw-bold';
+        userName.textContent = username
+
+        // Comment Text
+        var commentText = document.createElement('p');
+        commentText.textContent = comment;
+
+        // Append elements to the container
+        mediaBody.appendChild(userName);
+        mediaBody.appendChild(commentText);
+
+        commentContainer.appendChild(userIcon);
+        commentContainer.appendChild(mediaBody);
+
+        document.getElementById('commentContainer').appendChild(commentContainer);
+    }
+
 </script>
 
 @* <script>

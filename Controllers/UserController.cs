@@ -319,5 +319,22 @@ namespace PRN_Project.Controllers
             return View(_context.Orders.Where(o => o.buyerId == user.id).ToList());
         }
 
+        public IActionResult Review(string comment, int audioId)
+        {
+            string username = HttpContext.Session.GetString("user");
+            User user = _context.Users.FirstOrDefault(u => u.username == username);
+            if (user == null) return BadRequest();
+
+            Review review = new Review();
+
+            review.userId = user.id;
+            review.audioId = audioId;
+            review.comment = comment;
+
+            _context.Reviews.Add(review);
+            _context.SaveChanges();
+
+            return Ok();
+        }
     }
 }
