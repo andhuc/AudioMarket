@@ -289,7 +289,7 @@ VALUES
 
 INSERT INTO Audio (artistId, genreId, moodId, filename, title, [image])
 VALUES
-  (3, 3, 1, '/audio/ADORE.mp3', 'Adore', '/audio/img/6.gif'),
+  (3, 3, 1, '/audio/ADORE.mp3', 'Adore', '/audio/img/6.png'),
   (2, 5, 3, '/audio/BLAME.mp3', 'Blame', '/audio/img/7.png'),
   (1, 2, 2, '/audio/D.A.D.mp3', 'D.A.D', '/audio/img/8.png'),
   (3, 4, 1, '/audio/FRIEND.mp3', 'Friend', '/audio/img/9.png'),
