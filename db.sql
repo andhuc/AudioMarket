@@ -281,11 +281,19 @@ VALUES
 -- Audio
 INSERT INTO Audio (artistId, genreId, moodId, filename, title, [image])
 VALUES
-  (4, 2, 1, '/audio/CANDY.mp3', 'candy', '/audio/img/1.gif'),
-  (4, 5, 3, '/audio/MARVEL.mp3', 'marvel', '/audio/img/2.png'),
-  (4, 1, 2, '/audio/LILY.mp3', 'lily', '/audio/img/3.png'),
-  (3, 4, 4, '/audio/LUCKY.mp3', 'lucky', '/audio/img/4.png'),
-  (2, 3, 5, '/audio/AIR.mp3', 'lau dai tinh ai', '/audio/img/5.png');
+  (4, 2, 1, '/audio/CANDY.mp3', 'Candy', '/audio/img/1.gif'),
+  (4, 5, 3, '/audio/MARVEL.mp3', 'Marvel', '/audio/img/2.png'),
+  (4, 1, 2, '/audio/LILY.mp3', 'Sakura', '/audio/img/3.png'),
+  (3, 4, 4, '/audio/LUCKY.mp3', 'Lucky', '/audio/img/4.png'),
+  (2, 3, 5, '/audio/PEACH.mp3', 'lau dai tinh ai', '/audio/img/5.png');
+
+INSERT INTO Audio (artistId, genreId, moodId, filename, title, [image])
+VALUES
+  (3, 3, 1, '/audio/ADORE.mp3', 'Adore', '/audio/img/6.gif'),
+  (2, 5, 3, '/audio/BLAME.mp3', 'Blame', '/audio/img/7.png'),
+  (1, 2, 2, '/audio/D.A.D.mp3', 'D.A.D', '/audio/img/8.png'),
+  (3, 4, 1, '/audio/FRIEND.mp3', 'Friend', '/audio/img/9.png'),
+  (2, 3, 5, '/audio/HOONEY.mp3', 'Hooney', '/audio/img/10.png');
   
 -- Reviews
 INSERT INTO Review (userId, audioId, rating, comment)  
@@ -320,3 +328,21 @@ VALUES
   (2, 5),
   (3, 4),
   (1, 5);
+
+INSERT INTO Favorite (userId, audioId)
+VALUES 
+  (4, 1),
+  (4, 6),
+  (2, 4),
+  (4, 5),
+  (3, 8),
+  (2, 9);
+
+INSERT INTO Favorite (userId, audioId)
+VALUES 
+  (4, 1),
+  (3, 7),
+  (2, 1),
+  (2, 7),
+  (4, 4),
+  (1, 10);
