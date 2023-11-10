@@ -1,32 +1,19 @@
-﻿@inject AudioMarketContext dbContext
-@{
+﻿@{
     String username = Context.Session.GetString("user");
     User user = null;
-    List <Order> order = new List<Order>();
-    if(username != null)
-    {
-        user = dbContext.Users.FirstOrDefault(u => u.username == username);
-        if (user.role != 1)
-        {
-            order = ViewBag.OrderList;
-            order = order.Where(o => o.buyerId == user.id).ToList();
-        }
-        else
-        {
-            order = ViewBag.OrderList;
-        }
-    }
 }
+@model List<Order>
+
 
 <div class="row d-flex justify-content-center text-center">
 
     <h3 class="fw-bold mt-4">Manage Order</h3>
 
-    <h4 class="fw-bold mt-4">Total Order: @order.Count()</h4>
+    <h4 class="fw-bold mt-4">Total Order: @Model.Count()</h4>
 
-    <div class="col-8 mt-5" id="datatableDiv">
+    <div class="col-8 mt-5">
 
-        <table class="table table-borderless text-white" id="datatable">
+        <table class="table table-borderless text-white">
             <thead class="mb-5">
                 <tr class="mb-5">
                     <th class="border-bottom">Order Id</th>
@@ -37,7 +24,7 @@
                 </tr>
             </thead>
             <tbody class="text-center mt-5">
-                @foreach (var o in order)
+                @foreach (var o in Model)
                 {
                     <tr class="mt-5">
 

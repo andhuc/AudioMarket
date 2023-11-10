@@ -113,6 +113,14 @@ namespace PRN_Project.Models
 
         public int status { get; set; }
 
+        public string getStatusDetails()
+        {
+            if (status == 1) return "Canceled";
+            if (status == 2) return "Completed";
+            return "Pending";
+        }
+        
+
         [Column(TypeName = "datetime")]
         public DateTime purchaseDate { get; set; }
 

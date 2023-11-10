@@ -311,5 +311,13 @@ namespace PRN_Project.Controllers
             return View(_context.Audios.Where(a => a.artistId == user.id).ToList());
         }
 
+        public IActionResult MyOrder()
+        {
+            string username = HttpContext.Session.GetString("user");
+            User user = _context.Users.FirstOrDefault(u => u.username == username);
+
+            return View(_context.Orders.Where(o => o.buyerId == user.id).ToList());
+        }
+
     }
 }
