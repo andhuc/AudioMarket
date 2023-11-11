@@ -65,14 +65,14 @@
                             {
                                 <form id="banForm_@user.id" method="post" asp-action="BanUser">
                                     <input type="hidden" name="userId" value="@user.id" />
-                                    <button type="submit" class="btn btn-danger" onclick="confirmBan(@user.id)">Ban</button>
+                                    <button type="button" class="btn btn-danger" onclick="confirmBan(@user.id)">Ban</button>
                                 </form>
                             }
                             else
                             {
                                 <form id="unbanForm_@user.id" method="post" asp-action="UnbanUser">
                                     <input type="hidden" name="userId" value="@user.id" />
-                                    <button type="submit" class="btn btn-success" onclick="confirmUnban(@user.id)">Unban</button>
+                                    <button type="button" class="btn btn-success" onclick="confirmUnban(@user.id)">Unban</button>
                                 </form>
                             }
                     </tr>
