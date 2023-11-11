@@ -31,10 +31,18 @@
                         <td>@o.id</td>
                         <td>@o.User.name</td>
                         <td>@o.Audio.title</td>
-                        <td>@o.getStatusDetails()</td>
+                        <td class="statusDetails">@o.getStatusDetails()</td>
                         <td>
                             <p class="btn btn-light" data-toggle="modal" data-target="#detailsModal"
                                onclick="showOrder('@o.Audio.title', '@o.User.name', '@o.getStatusDetails()', '@o.purchaseDate', '@o.Audio.image')">Details</p>
+
+                            @if (o.status == 0)
+                            {
+                                <p class="btn btn-danger ms-4" onclick="cancelOrder(this.parentNode.parentNode, this, @o.id)">Cancel</p>
+                            } else
+                            {
+                                <p class="btn btn-danger ms-4" style="visibility: hidden">Cancel</p>
+                            }
                         </td>
 
                     </tr>
@@ -79,6 +87,15 @@
         modal.querySelector('.buyer').textContent = 'Buyer:  ' + buyer;
         modal.querySelector('.status').textContent = 'Status:  ' + status;
         modal.querySelector('.purchasedate').textContent = 'Purchasedate:  ' + purchasedate;
+    }
+
+    function cancelOrder(parent, element, orderId) {
+
+        parent.querySelector('.statusDetails').textContent = 'Canceled';
+        element.style.visibility = 'hidden';
+
+        fetch(`/User/UpdateOrderStatus?orderId=${orderId}&status=1`);
+        showToast('Order canceled!');
     }
 
 </script>

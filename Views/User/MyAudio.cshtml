@@ -89,9 +89,9 @@
 
     <h3 class="fw-bold mt-4">ORDER</h3>
 
-    <div class="col-8 mt-5">
+    <div class="col-8 mt-5" id="datatableDiv">
 
-        <table class="table table-borderless text-white">
+        <table class="table table-borderless text-white" id="datatable">
             <thead>
                 <tr>
                     <th></th>
@@ -102,7 +102,7 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="mt-5">
                 @foreach (Order order in ViewBag.OrderList)
                 {
                     <tr class="mt-5 audio" data-genre="@order.Audio.genreId" data-mood="@order.Audio.moodId" data-title="@order.Audio.title.ToLower()">
@@ -119,9 +119,13 @@
 
                         <td>@order.User.name</td>
                         <td>@order.purchaseDate</td>
-                        <td>@order.status</td>
+                        <td class="statusDetails">@order.getStatusDetails()</td>
 
                         <td>
+                            @if (order.status == 0)
+                            {
+                                <p class="btn btn-success ms-4" onclick="accpectOrder(this.parentNode.parentNode, this, @order.id)">Accpect</p>
+                            }
                         </td>
                     </tr>
                 }
@@ -206,6 +210,16 @@
         const toastContent = document.getElementById('toastContent');
         toastContent.textContent = message;
         $('.toast').toast('show')
+    }
+
+
+    function accpectOrder(parent, element, orderId) {
+
+        parent.querySelector('.statusDetails').textContent = 'Completed';
+        element.style.visibility = 'hidden';
+
+        fetch(`/User/UpdateOrderStatus?orderId=${orderId}&status=2`);
+        showToast('✅Order accepted!');
     }
 
 </script>

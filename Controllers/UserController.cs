@@ -336,5 +336,16 @@ namespace PRN_Project.Controllers
 
             return Ok();
         }
+
+        public IActionResult UpdateOrderStatus(int orderId, int status)
+        {
+            Order order = _context.Orders.FirstOrDefault(o => o.id == orderId);
+
+            order.status = status;
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
     }
 }
